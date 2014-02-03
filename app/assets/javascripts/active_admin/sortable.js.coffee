@@ -33,6 +33,10 @@ $ ->
           url: $this.data("sortable-url")
           type: "post"
           data: $this.sortable("serialize")
+          beforeSend: (xhr) ->
+            token = $('meta[name="csrf-token"]').attr('content')
+            if (token)
+              xhr.setRequestHeader('X-CSRF-Token', token)
         .always ->
           $this.sortable("enable")
           ActiveAdminSortableEvent.trigger('ajaxAlways')
@@ -77,6 +81,10 @@ $ ->
           url: $this.data("sortable-url")
           type: "post"
           data: $this.nestedSortable("serialize")
+          beforeSend: (xhr) ->
+            token = $('meta[name="csrf-token"]').attr('content')
+            if (token)
+              xhr.setRequestHeader('X-CSRF-Token', token)
         .always ->
           $this.find('.item').each (index) ->
             if index % 2
